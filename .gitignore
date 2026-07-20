@@ -1,6 +1,5 @@
-# Dependencies
+# Dependencies and package managers
 node_modules/
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
@@ -11,11 +10,8 @@ build/
 *.local
 
 # Environment variables
-.env
-.env.local
-.env.*.local
-.env.production
-.env.development
+.env*
+!.env.example
 
 # Logs
 logs/
@@ -44,15 +40,22 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
+.vitest/
 *.test.ts.snap
 
 # Temporary files
 *.tmp
 *.temp
 .cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
 
-# Vite
+# Tool caches
 .vite/
+.eslintcache
+*.tsbuildinfo
 
 # AI Studio / AI Platform files
 ai-studio.json
@@ -60,3 +63,7 @@ ai-studio.json
 # Claude Code
 .claude/
 CLAUDE.md
+
+# Local AI agent tools
+.agents/
+.codex/

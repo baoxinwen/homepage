@@ -3,389 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>浮生闲记 - 测试工程师 & 自动化测试专家</title>
-    <meta name="description" content="浮生闲记 - 专注于软件质量保障的测试工程师。精通 Python、Selenium、JMeter、Docker 等技术，致力于构建高效、稳定的测试体系。" />
-    <meta name="keywords" content="浮生闲记, 测试工程师, 自动化测试, Python, Selenium, JMeter, Docker, Jenkins, 软件测试" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' https://api.rss2json.com https://xsfly.com; img-src 'self' data: https:; style-src 'self'; script-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';"
+    />
+    <meta name="theme-color" content="#F3F0E8" />
+    <script src="/theme-init.js"></script>
+    <title>浮生闲记 - 测试工程师与独立开发者</title>
+    <meta
+      name="description"
+      content="浮生闲记 - 专注软件质量保障、自动化测试与实用工具开发的测试工程师。"
+    />
+    <meta
+      name="keywords"
+      content="浮生闲记, 测试工程师, 自动化测试, Python, Selenium, Docker, 独立开发"
+    />
 
-    <!-- Open Graph / Facebook -->
+    <link rel="canonical" href="https://xsfly.com/" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:url" content="https://xsfly.com/" />
-    <meta property="og:title" content="浮生闲记 - 测试工程师 & 自动化测试专家" />
-    <meta property="og:description" content="专注于软件质量保障的测试工程师，致力于构建高效、稳定的测试体系。" />
+    <meta property="og:title" content="浮生闲记 - 测试工程师与独立开发者" />
+    <meta property="og:description" content="把复杂系统测得更可靠，也把真实问题做成好用的工具。" />
     <meta property="og:image" content="https://xsfly.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="浮生闲记 - 测试工程师与独立开发者" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://xsfly.com/" />
-    <meta property="twitter:title" content="浮生闲记 - 测试工程师 & 自动化测试专家" />
-    <meta property="twitter:description" content="专注于软件质量保障的测试工程师，致力于构建高效、稳定的测试体系。" />
-    <meta property="twitter:image" content="https://xsfly.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="浮生闲记 - 测试工程师与独立开发者" />
+    <meta name="twitter:description" content="把复杂系统测得更可靠，也把真实问题做成好用的工具。" />
+    <meta name="twitter:image" content="https://xsfly.com/og-image.png" />
+    <meta name="twitter:image:alt" content="浮生闲记 - 测试工程师与独立开发者" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://aistudiocdn.com; font-src 'self' data: https://cdn.tailwindcss.com https://aistudiocdn.com; img-src 'self' data: https:; connect-src 'self' https://api.rss2json.com https://xsfly.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://aistudiocdn.com;" />
+    <link rel="stylesheet" href="/styles.css" />
 
-    <!-- Additional Security Headers -->
-    <meta name="referrer" content="no-referrer" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%2314b8a6'/><stop offset='100%25' style='stop-color:%2310b981'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><path d='M30 50l15 15 25-25' stroke='white' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      // Polyfill process for browser environments
-      window.process = window.process || { env: { API_KEY: '' } };
-    </script>
-    <script>
-      /**
-       * Security & Anti-Theft Script - Enhanced
-       * 1. Disable Right Click
-       * 2. Disable F12 and DevTool Shortcuts
-       * 3. Disable Drag & Drop
-       * 4. Disable Print
-       * 5. DevTools Detection
-       * 6. Window Size Detection
-       */
-      (function () {
-        'use strict';
-
-        // 1. Disable Right Click
-        document.addEventListener('contextmenu', function (e) {
-          e.preventDefault();
-          return false;
-        });
-
-        // 2. Disable Keyboard Shortcuts
-        document.addEventListener('keydown', function (e) {
-          // F12
-          if (e.key === 'F12' || e.keyCode === 123) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + Shift + I (DevTools)
-          if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + Shift + J (Console)
-          if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + Shift + C (Inspect Element)
-          if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.keyCode === 67)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + U (View Source)
-          if (e.ctrlKey && (e.key === 'U' || e.keyCode === 85)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + S (Save Page)
-          if (e.ctrlKey && (e.key === 'S' || e.keyCode === 83)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + P (Print)
-          if (e.ctrlKey && (e.key === 'P' || e.keyCode === 80)) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + C (Copy) - Optional: disable copy
-          if (e.ctrlKey && (e.key === 'C' || e.keyCode === 67) && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-          // Ctrl + A (Select All)
-          if (e.ctrlKey && (e.key === 'A' || e.keyCode === 65) && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-        });
-
-        // 3. Disable Drag & Drop
-        document.addEventListener('dragstart', function (e) {
-          e.preventDefault();
-          return false;
-        });
-
-        document.addEventListener('drop', function (e) {
-          e.preventDefault();
-          return false;
-        });
-
-        // 4. Disable Print
-        window.addEventListener('beforeprint', function (e) {
-          e.preventDefault();
-          alert('打印功能已被禁用');
-          return false;
-        });
-
-        // 5. DevTools Detection (using timing attack)
-        setInterval(function() {
-          const before = new Date().getTime();
-          // Using debugger as a trap
-          const detector = function() {} + '';
-          const after = new Date().getTime();
-          // If there's a significant delay, devtools might be open
-          if (after - before > 100) {
-            // DevTools detected - optional action
-            // document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0a0a0a;color:#fff;font-family:sans-serif;"><h1>检测到开发者工具</h1></div>';
-          }
-        }, 1000);
-
-        // 6. Window Size Detection
-        const devtoolsThreshold = 160;
-        const checkDevTools = function() {
-          const widthThreshold = window.outerWidth - window.innerWidth > devtoolsThreshold;
-          const heightThreshold = window.outerHeight - window.innerHeight > devtoolsThreshold;
-          if (widthThreshold || heightThreshold) {
-            // DevTools might be open
-            // Optional: take action
-          }
-        };
-        window.addEventListener('resize', checkDevTools);
-        checkDevTools();
-
-        // 7. Console Detection & Stylish Copyright Notice
-        const consoleStyle = [
-          'color: #14b8a6',
-          'font-size: 16px',
-          'font-weight: bold',
-          'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-        ].join(';');
-
-        const headingStyle = [
-          'color: #0f766e',
-          'font-size: 24px',
-          'font-weight: bold',
-          'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          'text-shadow: 0 1px 2px rgba(0,0,0,0.1)'
-        ].join(';');
-
-        const subStyle = [
-          'color: #64748b',
-          'font-size: 13px',
-          'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-        ].join(';');
-
-        const dividerStyle = [
-          'color: #cbd5e1',
-          'font-size: 14px'
-        ].join(';');
-
-        console.clear();
-        console.log('\n');
-        console.log('%c⚠️  警告', headingStyle);
-        console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', dividerStyle);
-        console.log('');
-        console.log('%c此页面的所有内容（包括但不限于代码、设计、文字）均受版权保护。', consoleStyle);
-        console.log('');
-        console.log('%c© ' + new Date().getFullYear() + ' 浮生闲记 · All Rights Reserved', consoleStyle);
-        console.log('%c未经许可，禁止复制、分发或用于任何商业用途。', subStyle);
-        console.log('');
-        console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', dividerStyle);
-        console.log('');
-        console.log('%c💡 提示：如果你对技术感兴趣，欢迎访问我的博客：https://xsfly.com', subStyle);
-        console.log('\n');
-
-        // 8. Disable clipboard access on sensitive elements
-        document.addEventListener('copy', function (e) {
-          const selection = window.getSelection();
-          if (selection.toString().length > 0) {
-            e.preventDefault();
-            return false;
-          }
-        });
-
-        // 9. Disable cut
-        document.addEventListener('cut', function (e) {
-          e.preventDefault();
-          return false;
-        });
-
-        // 10. Image protection
-        document.querySelectorAll('img').forEach(function(img) {
-          img.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-          });
-          img.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-          });
-        });
-      })();
-    </script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: '#3b82f6',
-              accent: '#8b5cf6',
-            },
-            animation: {
-              'fade-in': 'fadeIn 0.8s ease-out forwards',
-              'slide-up': 'slideUp 0.6s ease-out forwards',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'shimmer': 'shimmer 2s linear infinite',
-              'shine': 'shine 3s infinite',
-              'gradient': 'gradient 3s ease infinite',
-              'float': 'float 6s ease-in-out infinite',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              slideUp: {
-                '0%': { transform: 'translateY(20px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
-              },
-              shimmer: {
-                '0%': { backgroundPosition: '200% 0' },
-                '100%': { backgroundPosition: '-200% 0' }
-              },
-              shine: {
-                '0%': { transform: 'translateX(-100%)' },
-                '20%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(100%)' }
-              },
-              gradient: {
-                '0%, 100%': { backgroundPosition: '0% 50%' },
-                '50%': { backgroundPosition: '100% 50%' }
-              },
-              float: {
-                '0%, 100%': { transform: 'translate(0, 0)' },
-                '50%': { transform: 'translate(30px, -30px)' }
-              }
-            },
-            backgroundImage: {
-              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-            }
-          },
-        },
-      };
-    </script>
-    <style>
-      /* Enhanced Base Styles */
-      * {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      /* Allow text selection in specific interactive areas */
-      input, textarea, [contenteditable] {
-        -webkit-user-select: text;
-        -moz-user-select: text;
-        -ms-user-select: text;
-        user-select: text;
-      }
-
-      /* Custom Text Selection */
-      ::selection {
-        background: rgba(20, 184, 166, 0.3);
-        color: inherit;
-      }
-
-      ::-moz-selection {
-        background: rgba(20, 184, 166, 0.3);
-        color: inherit;
-      }
-
-      /* Enhanced Dot Pattern Background */
-      .bg-dot-pattern {
-        background-image: radial-gradient(circle at 1px 1px, rgb(214 211 209) 1px, transparent 0);
-        background-size: 24px 24px;
-      }
-      .dark .bg-dot-pattern {
-        background-image: radial-gradient(circle at 1px 1px, rgb(39 39 42) 1px, transparent 0);
-      }
-
-      /* Enhanced Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(to bottom, rgb(214 211 209), rgb(168 162 158));
-        border-radius: 4px;
-        border: 2px solid transparent;
-        background-clip: padding-box;
-      }
-      .dark ::-webkit-scrollbar-thumb {
-        background: linear-gradient(to bottom, rgb(63 63 70), rgb(82 82 91));
-        border: 2px solid transparent;
-        background-clip: padding-box;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(to bottom, rgb(168 162 158), rgb(120 113 108));
-        border: 2px solid transparent;
-        background-clip: padding-box;
-      }
-      .dark ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(to bottom, rgb(82 82 91), rgb(113 113 122));
-        border: 2px solid transparent;
-        background-clip: padding-box;
-      }
-
-      /* Hide Scrollbar Utility */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-
-      /* Enhanced Focus Styles */
-      *:focus-visible {
-        outline: 2px solid rgb(20 184 166);
-        outline-offset: 2px;
-      }
-      *:focus:not(:focus-visible) {
-        outline: none;
-      }
-
-      /* Smooth Transitions */
-      * {
-        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 150ms;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/"
-  }
-}
-</script>
-</head>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23191813'/%3E%3Ccircle cx='80' cy='20' r='7' fill='%23E85D2A'/%3E%3Ctext x='50' y='62' text-anchor='middle' fill='%23F3F0E8' font-size='34' font-family='serif' font-weight='700'%3EBW%3C/text%3E%3C/svg%3E"
+    />
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
