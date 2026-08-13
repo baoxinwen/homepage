@@ -63,6 +63,14 @@ describe('social image metadata', () => {
     expect(html).toContain('og:image:height" content="630');
     expect(html).toContain('name="twitter:image"');
   });
+
+  it('uses the public homepage as the canonical and sharing origin', () => {
+    const html = readProjectFile('./index.html');
+    expect(html).toContain('<link rel="canonical" href="https://baoxw.com/" />');
+    expect(html).toContain('<meta property="og:url" content="https://baoxw.com/" />');
+    expect(html).toContain('<meta property="og:image" content="https://baoxw.com/og-image.png" />');
+    expect(html).toContain('<meta name="twitter:image" content="https://baoxw.com/og-image.png" />');
+  });
 });
 
 describe('visible copy', () => {
