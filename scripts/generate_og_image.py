@@ -76,7 +76,7 @@ def main() -> None:
         draw.text((836, top - 4), number, font=font(17, bold=True), fill="#AAA397")
         draw.text((886, top - 6), label, font=font(22, bold=True), fill="#EDE8DC")
 
-    draw.text((88, 538), "XSFLY.COM", font=font(18, bold=True), fill=COLORS["success"])
+    draw.text((88, 538), "BAOXW.COM", font=font(18, bold=True), fill=COLORS["success"])
     draw.line((220, 550, 700, 550), fill=COLORS["line"], width=2)
     draw.text((916, 538), "MAKE IT RELIABLE", font=font(17, bold=True), fill=COLORS["muted"])
 

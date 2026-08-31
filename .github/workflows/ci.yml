@@ -20,5 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
+      - name: Use npm 11 (matches packageManager)
+        run: npm install -g npm@11.6.2
       - run: npm ci
       - run: npm run check
