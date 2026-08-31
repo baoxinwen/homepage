@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Icons, TECH_GROUPS } from '../constants';
+import SectionHeading from './SectionHeading';
+import { markMilestone } from '../lib/smoke';
 import {
   BLOG_REQUEST_TIMEOUT_MS,
   fetchBlogPosts,
@@ -8,28 +10,6 @@ import {
 } from '../lib/blog';
 import type { BlogPost } from '../types';
 import FeaturedProjects from './FeaturedProjects';
-
-const SectionHeading: React.FC<{
-  index: string;
-  label: string;
-  title: string;
-  titleId?: string;
-  description?: string;
-  action?: React.ReactNode;
-}> = ({ index, label, title, titleId, description, action }) => (
-  <div className="section-heading">
-    <div>
-      <div className="section-kicker">
-        <span>{index}</span>
-        <i />
-        <span>{label}</span>
-      </div>
-      <h2 id={titleId}>{title}</h2>
-      {description && <p>{description}</p>}
-    </div>
-    {action && <div className="section-action">{action}</div>}
-  </div>
-);
 
 const getBlogStorage = (): Storage | null => {
   try {
@@ -49,10 +29,12 @@ const Projects: React.FC = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    markMilestone('RENDER');
     let active = true;
     const { storage, cached } = initialBlogState;
 
     if (cached?.freshness === 'fresh') {
+      markMilestone('RSS');
       return () => {
         active = false;
       };
@@ -68,8 +50,16 @@ const Projects: React.FC = () => {
         setPosts(nextPosts);
         setError(false);
         writeBlogCache(storage, nextPosts);
+        markMilestone('RSS');
       } catch {
-        if (active && !cached) setError(true);
+        if (!active) return;
+        // 有陈旧缓存兜底时页面仍正常展示，自检不判失败
+        if (cached) {
+          markMilestone('RSS');
+        } else {
+          setError(true);
+          markMilestone('RSS', 'fail');
+        }
       } finally {
         window.clearTimeout(timeoutId);
         if (active) setLoading(false);
@@ -87,34 +77,21 @@ const Projects: React.FC = () => {
   return (
     <div className="content-shell">
       <section id="capabilities" className="capabilities-section" aria-labelledby="capabilities-title">
-        <SectionHeading
-          index="02"
-          label="Capabilities"
-          title="专业能力"
-          titleId="capabilities-title"
-        />
+        <SectionHeading index="02" label="Capabilities" title="专业能力" titleId="capabilities-title" />
 
-        <div className="capability-matrix">
-          <div className="capability-intro">
-            <span className="matrix-code">TESTING / TOOLING</span>
-            <strong>既验证单项功能，<br />也承担版本发布前的集中测试。</strong>
-          </div>
-
-          <div className="capability-grid">
-            {TECH_GROUPS.map((group, index) => (
-              <article key={group.title} className="capability-item">
-                <div className="capability-item-head">
-                  <span className="capability-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="capability-symbol">{group.icon}</span>
-                </div>
+        <div className="capability-list">
+          {TECH_GROUPS.map((group) => (
+            <article key={group.title} className="capability-row">
+              <span className="capability-symbol">{group.icon}</span>
+              <div className="capability-body">
                 <h3>{group.title}</h3>
-                <p>{group.description}</p>
-                <div className="capability-skills" aria-label={`${group.title}技术栈`}>
-                  {group.skills.map((skill) => <span key={skill}>{skill}</span>)}
-                </div>
-              </article>
-            ))}
-          </div>
+                <p className="capability-desc">{group.desc}</p>
+              </div>
+              <div className="capability-skills" aria-label={`${group.title}技术栈`}>
+                {group.skills.map((skill) => <span key={skill}>{skill}</span>)}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -126,7 +103,6 @@ const Projects: React.FC = () => {
           label="Recent posts"
           title="最近博客"
           titleId="articles-title"
-          description="记录工程实践、工具开发，也记录生活中值得反复回看的片段。"
           action={(
             <a className="text-link" href="https://xsfly.com" target="_blank" rel="noopener noreferrer">
               查看全部文章 <Icons.ArrowRight className="inline-icon" />
@@ -134,11 +110,18 @@ const Projects: React.FC = () => {
           )}
         />
 
-        <div className="article-list" aria-live="polite">
+        <div className="article-list">
+          <p className="sr-only" role="status">
+            {loading
+              ? '正在加载最新文章…'
+              : error
+                ? '最新文章暂时无法读取'
+                : `已加载 ${posts.length} 篇最新文章`}
+          </p>
           {loading && [1, 2, 3].map((item) => (
             <div key={item} className="article-row article-skeleton" aria-hidden="true">
               <span />
-              <div><i /><i /></div>
+              <i />
             </div>
           ))}
 
@@ -166,7 +149,7 @@ const Projects: React.FC = () => {
                 <h3>{post.title}</h3>
                 <p>{post.description}</p>
               </div>
-              <span className="article-read-time">{post.readTimeMinutes} min read</span>
+              <span className="article-read-time">约 {post.readTimeMinutes} 分钟</span>
               <Icons.ArrowRight className="article-arrow" />
             </a>
           ))}

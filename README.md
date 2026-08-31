@@ -2,6 +2,8 @@
 
 面向软件测试、自动化实践和开源工具开发的个人主页。
 
+线上主页部署于 [https://baoxw.com](https://baoxw.com)，技术博客运行于 [https://xsfly.com](https://xsfly.com)；页面元数据（canonical、Open Graph、Twitter Card）以 `baoxw.com` 为准。
+
 ![License](https://img.shields.io/badge/license-MIT-191813.svg)
 ![React](https://img.shields.io/badge/react-19.2-E85D2A.svg)
 ![TypeScript](https://img.shields.io/badge/typescript-5.8-2F7657.svg)
@@ -9,10 +11,10 @@
 
 ## 页面内容
 
-- 关于我：测试工程师与独立开发者的个人介绍
-- 专业能力：编程开发、自动化、运维工具与协作平台
-- 开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor
-- 最近博客：通过 RSS 展示最新文章
+- 关于我：通栏两行宣言（「浮生闲趣」强调）+ 终端独白式自我介绍（打字机效果，尊重 reduced-motion）+ 实时冒烟测试条
+- 专业能力：四组技术栈的双列清单
+- 开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor（视觉优先的卡片）
+- 最近博客：通过 RSS 展示最新文章标题与摘要
 - 深色/浅色主题与响应式布局
 
 ## 视觉系统
@@ -28,7 +30,7 @@
 | 成功状态 | `#2F7657` | `#5AAA7C` |
 | 边框 | `#CCC7B9` | `#37342B` |
 
-全站样式由 `styles.css` 中的语义变量和组件类维护，不依赖运行时 CSS CDN。标题、正文与技术标签分别使用本机宋体、黑体和等宽字体栈，无需下载字体资源。
+全站样式由 `styles.css` 中的语义变量和组件类维护，不依赖运行时 CSS CDN。标题、正文与技术标签分别使用本机宋体、黑体和等宽字体栈，无需下载字体资源。排印采用字号特定字距（大字号负字距、等宽标签正字距），动效统一使用 `--ease-out` / `--ease-in-out` 缓动令牌；导航为半透明悬浮材质（支持 `prefers-reduced-transparency` 回退）。
 
 社交分享图位于 `public/og-image.png`。如需改版，可使用 Python 3 与 Pillow 运行 `scripts/generate_og_image.py` 重新生成。
 
@@ -72,10 +74,13 @@ homepage/
 ├── components/
 │   ├── Hero.tsx
 │   ├── Projects.tsx
-│   └── FeaturedProjects.tsx
+│   ├── FeaturedProjects.tsx
+│   ├── SmokeTest.tsx
+│   └── TerminalIntro.tsx
 ├── lib/
 │   ├── blog.ts / blog.test.ts
-│   └── theme.ts / theme.test.ts
+│   ├── theme.ts / theme.test.ts
+│   └── smoke.ts
 ├── public/
 │   ├── og-image.png
 │   └── theme-init.js
@@ -100,7 +105,7 @@ homepage/
 - 外部链接使用 `noopener noreferrer`
 - 支持键盘焦点、文字选择、复制、打印及 `prefers-reduced-motion`
 - 主题选择保存在 `localStorage`；未主动选择时持续跟随系统偏好
-- RSS 数据限制为 `xsfly.com` 链接，并提供超时、缓存和异常降级
+- RSS 数据限制为 `xsfly.com` 及其子域的链接，并提供超时、缓存和异常降级
 
 ## 自动化验证
 
@@ -110,6 +115,7 @@ homepage/
 
 ## 作者
 
+- 主页：[https://baoxw.com](https://baoxw.com)
 - 博客：[https://xsfly.com](https://xsfly.com)
 - GitHub：[@baoxinwen](https://github.com/baoxinwen)
 

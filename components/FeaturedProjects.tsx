@@ -1,5 +1,6 @@
 import React from 'react';
 import { FEATURED_PROJECTS, Icons } from '../constants';
+import SectionHeading from './SectionHeading';
 import type { FeaturedProject, ProjectVisual as ProjectVisualType } from '../types';
 
 const sizeStyles: Record<FeaturedProject['size'], string> = {
@@ -16,63 +17,48 @@ const WindowBar: React.FC<{ label: string }> = ({ label }) => (
 );
 
 const MemeVisual: React.FC = () => (
-  <div className="project-visual project-visual--meme">
+  <div className="project-visual project-visual--meme" data-print-hidden="true">
     <div className="visual-window meme-window">
       <WindowBar label="LOCAL CANVAS" />
-      <div className="meme-layout">
-        <div className="meme-upload">
-          <span className="meme-face" aria-hidden="true"><i /><i /><b /></span>
-          <small>头像已载入</small>
-        </div>
-        <div className="meme-preview">
-          <span>实时预览 · GIF</span>
-          <strong>这就很合理</strong>
-          <div aria-hidden="true"><i /><i /><i /><i /></div>
-        </div>
+      <div className="meme-preview">
+        <span>实时预览 · GIF</span>
+        <strong>这就很合理</strong>
+        <div aria-hidden="true"><i /><i /><i /><i /></div>
       </div>
     </div>
   </div>
 );
 
 const LedgerVisual: React.FC = () => (
-  <div className="project-visual project-visual--ledger">
+  <div className="project-visual project-visual--ledger" data-print-hidden="true">
     <div className="visual-window ledger-window">
       <WindowBar label="JUL / OVERVIEW" />
       <div className="ledger-layout">
-        <div>
-          <small>本月结余</small>
-          <strong>¥ 8,420</strong>
-          <div className="ledger-bars" aria-hidden="true">
-            {Array.from({ length: 7 }, (_, index) => <i key={index} />)}
-          </div>
+        <small>本月结余</small>
+        <strong>¥ 8,420</strong>
+        <div className="ledger-bars" aria-hidden="true">
+          {Array.from({ length: 7 }, (_, index) => <i key={index} />)}
         </div>
-        <dl className="ledger-breakdown">
-          <div><dt>餐饮</dt><dd>36%</dd></div>
-          <div><dt>交通</dt><dd>24%</dd></div>
-          <div><dt>购物</dt><dd>18%</dd></div>
-        </dl>
       </div>
     </div>
   </div>
 );
 
 const TreeVisual: React.FC = () => (
-  <div className="project-visual project-visual--tree">
+  <div className="project-visual project-visual--tree" data-print-hidden="true">
     <div className="tree-terminal">
       <WindowBar label="CopyTree.exe" />
       <div className="tree-lines">
         <p><b>●</b> my-project/</p>
-        <p><span>├──</span> src/</p>
-        <p><span>│&nbsp;&nbsp; ├──</span> main.py</p>
-        <p><span>│&nbsp;&nbsp; └──</span> utils.py</p>
-        <p><span>└──</span> README.md <em>✓ copied</em></p>
+        <p><span>└──</span> src/</p>
+        <p>README.md <em>✓ copied</em></p>
       </div>
     </div>
   </div>
 );
 
 const MapVisual: React.FC = () => (
-  <div className="project-visual project-visual--map engineering-grid">
+  <div className="project-visual project-visual--map engineering-grid" data-print-hidden="true">
     <svg viewBox="0 0 360 150" fill="none" aria-hidden="true">
       <path className="map-route-shadow" d="M18 119C65 98 78 35 132 52C180 67 176 119 226 103C270 89 279 42 342 24" />
       <path className="map-route" d="M18 119C65 98 78 35 132 52C180 67 176 119 226 103C270 89 279 42 342 24" />
@@ -80,20 +66,14 @@ const MapVisual: React.FC = () => (
       <circle className="map-point map-point--end" cx="342" cy="24" r="6" />
     </svg>
     <div className="route-card"><span>LATEST ROUTE</span><strong>杭州 → 苏州</strong></div>
-    <span className="map-count">12 CITIES</span>
   </div>
 );
 
 const TrendVisual: React.FC = () => (
-  <div className="project-visual project-visual--trend">
+  <div className="project-visual project-visual--trend" data-print-hidden="true">
     <div className="trend-summary">
       <span>LIVE PULSE</span>
       <strong>48 sources</strong>
-      <ol>
-        <li><b>01</b> AI 工具</li>
-        <li><b>02</b> 科技</li>
-        <li><b>03</b> 游戏</li>
-      </ol>
     </div>
     <div className="trend-chart">
       <span>TREND <b>+28%</b></span>
@@ -120,21 +100,17 @@ const ProjectVisual: React.FC<{ visual: ProjectVisualType }> = ({ visual }) => {
 
 const FeaturedProjects: React.FC = () => (
   <section id="projects" className="projects-section" aria-labelledby="featured-projects-title">
-    <div className="section-heading">
-      <div>
-        <div className="section-kicker">
-          <span>03</span>
-          <i />
-          <span>Open source projects</span>
-        </div>
-        <h2 id="featured-projects-title">开源项目</h2>
-      </div>
-      <div className="section-action">
+    <SectionHeading
+      index="03"
+      label="Open source projects"
+      title="开源项目"
+      titleId="featured-projects-title"
+      action={(
         <a className="text-link" href="https://github.com/baoxinwen?tab=repositories" target="_blank" rel="noopener noreferrer">
           查看全部项目 <Icons.ArrowRight className="inline-icon" />
         </a>
-      </div>
-    </div>
+      )}
+    />
 
     <div className="project-grid">
       {FEATURED_PROJECTS.map((project, index) => (

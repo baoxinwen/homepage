@@ -18,36 +18,131 @@ const contrast = (foreground: string, background: string): number => {
   return ((values[0] ?? 0) + 0.05) / ((values[1] ?? 0) + 0.05);
 };
 
-const getRootVariable = (css: string, name: string): string => {
-  const rootBlock = css.match(/:root\s*{([\s\S]*?)}/)?.[1] ?? '';
-  const value = rootBlock.match(new RegExp(`--${name}:\\s*(#[a-f\\d]{6})`, 'i'))?.[1];
-  if (!value) throw new Error(`Missing CSS variable: ${name}`);
+const parseThemeBlock = (css: string, selector: ':root' | '.dark'): string => {
+  const pattern = selector === ':root'
+    ? /:root\s*\{([\s\S]*?)\}/
+    : /(?:^|\n)\.dark\s*\{([\s\S]*?)\n\}/;
+  const block = css.match(pattern)?.[1];
+  if (!block) throw new Error(`Missing ${selector} block in styles.css`);
+  return block;
+};
+
+const readCssVar = (block: string, name: string): string => {
+  const value = block.match(new RegExp(`--${name}:\\s*(#[a-f\\d]{6})`, 'i'))?.[1];
+  if (!value) throw new Error(`Missing CSS variable: --${name}`);
   return value;
 };
 
+// 与 CSS color-mix(in srgb, ...) 的 gamma 空间线性插值保持一致
+const colorMix = (a: string, b: string, ratio: number): string => {
+  const channel = (offset: number) => Math.round(
+    Number.parseInt(a.slice(offset, offset + 2), 16) * ratio
+      + Number.parseInt(b.slice(offset, offset + 2), 16) * (1 - ratio),
+  );
+  const hex = (value: number) => value.toString(16).padStart(2, '0');
+  return `#${hex(channel(1))}${hex(channel(3))}${hex(channel(5))}`;
+};
+
 describe('accessibility and security contracts', () => {
-  it('keeps small accent text above WCAG AA contrast', () => {
+  it('keeps every declared foreground/background pair above WCAG AA', () => {
     const css = readProjectFile('./styles.css');
-    const accentText = getRootVariable(css, 'accent-text');
-    const canvas = getRootVariable(css, 'canvas');
-    const surface = getRootVariable(css, 'surface');
-    const accentContrast = getRootVariable(css, 'accent-contrast');
-    expect(contrast(accentText, canvas)).toBeGreaterThanOrEqual(4.5);
-    expect(contrast(accentText, surface)).toBeGreaterThanOrEqual(4.5);
-    expect(contrast(accentContrast, accentText)).toBeGreaterThanOrEqual(4.5);
+    const light = parseThemeBlock(css, ':root');
+    const dark = parseThemeBlock(css, '.dark');
+
+    // 绑定 color-mix 比例：调整任一比例必须同步更新本文件中的展开计算
+    expect(css).toContain('color-mix(in srgb, var(--success) 12%, var(--surface-alt))');
+    expect(css).toContain('color-mix(in srgb, var(--accent) 5%, var(--surface-alt))');
+
+    const memeTint = {
+      light: colorMix(readCssVar(light, 'success'), readCssVar(light, 'surface-alt'), 0.12),
+      dark: colorMix(readCssVar(dark, 'success'), readCssVar(dark, 'surface-alt'), 0.12),
+    };
+    const ledgerTint = {
+      light: colorMix(readCssVar(light, 'accent'), readCssVar(light, 'surface-alt'), 0.05),
+      dark: colorMix(readCssVar(dark, 'accent'), readCssVar(dark, 'surface-alt'), 0.05),
+    };
+
+    const resolveVar = (theme: ':root' | '.dark', value: string): string => (
+      value.startsWith('#')
+        ? value
+        : readCssVar(theme === ':root' ? light : dark, value)
+    );
+
+    const pair = (theme: ':root' | '.dark', fg: string, bg: string, min: number) => ({
+      label: `[${theme === ':root' ? 'light' : 'dark'}] ${fg} on ${bg} >= ${min}`,
+      ratio: contrast(resolveVar(theme, fg), resolveVar(theme, bg)),
+      min,
+    });
+
+    const fixedPairs = [
+      pair(':root', 'ink', 'canvas', 4.5),
+      pair(':root', 'muted', 'canvas', 4.5),
+      pair(':root', 'muted', 'surface', 4.5),
+      pair(':root', 'muted', 'surface-alt', 4.5),
+      pair(':root', 'accent-text', 'canvas', 4.5),
+      pair(':root', 'accent-text', 'surface', 4.5),
+      pair(':root', 'accent-contrast', 'accent-text', 4.5),
+      pair(':root', 'success', 'canvas', 4.5),
+      // hero 强调标题为 clamp(2.5rem, 6vw, 4.75rem)/800，适用 AA Large 阈值
+      pair(':root', 'accent', 'canvas', 3.0),
+      // 项目卡片深底 mockup 的成对面板配色
+      pair(':root', 'panel-accent', 'panel-bg', 4.5),
+      pair(':root', 'panel-success', 'panel-bg', 4.5),
+      pair(':root', 'panel-muted', 'panel-bg', 4.5),
+      pair(':root', 'panel-ink', 'panel-bg', 4.5),
+      pair(':root', 'ink', memeTint.light, 4.5),
+      pair(':root', 'muted', ledgerTint.light, 4.5),
+
+      pair('.dark', 'ink', 'canvas', 4.5),
+      pair('.dark', 'muted', 'canvas', 4.5),
+      pair('.dark', 'muted', 'surface', 4.5),
+      pair('.dark', 'muted', 'surface-alt', 4.5),
+      pair('.dark', 'accent-text', 'canvas', 4.5),
+      pair('.dark', 'accent-text', 'surface', 4.5),
+      pair('.dark', 'accent-contrast', 'accent-text', 4.5),
+      pair('.dark', 'success', 'canvas', 4.5),
+      pair('.dark', 'accent', 'canvas', 3.0),
+      pair('.dark', 'panel-accent', 'panel-bg', 4.5),
+      pair('.dark', 'panel-success', 'panel-bg', 4.5),
+      pair('.dark', 'panel-muted', 'panel-bg', 4.5),
+      pair('.dark', 'panel-ink', 'panel-bg', 4.5),
+      pair('.dark', 'ink', memeTint.dark, 4.5),
+      pair('.dark', 'muted', ledgerTint.dark, 4.5),
+    ];
+
+    const failures = fixedPairs
+      .filter(({ ratio, min }) => ratio < min)
+      .map(({ label, ratio }) => `${label} (actual ${ratio})`);
+    expect(failures).toEqual([]);
   });
 
-  it('does not require inline style permissions', () => {
+  it('does not require inline style or remote image permissions', () => {
     const html = readProjectFile('./index.html');
     const entry = readProjectFile('./index.tsx');
-    const components = [
-      readProjectFile('./components/Hero.tsx'),
-      readProjectFile('./components/FeaturedProjects.tsx'),
-    ].join('\n');
+    const tsxFiles = [
+      './App.tsx',
+      './constants.tsx',
+      './components/Hero.tsx',
+      './components/Projects.tsx',
+      './components/FeaturedProjects.tsx',
+      './components/SectionHeading.tsx',
+      './components/SiteHeader.tsx',
+      './components/SmokeTest.tsx',
+      './components/TerminalIntro.tsx',
+    ];
+
     expect(html).not.toContain("'unsafe-inline'");
     expect(html).toContain('<link rel="stylesheet" href="/styles.css" />');
     expect(entry).not.toMatch(/import\s+['"]\.\/styles\.css['"]/);
-    expect(components).not.toMatch(/\sstyle=/);
+    for (const file of tsxFiles) {
+      expect(readProjectFile(file), `${file} 不应包含内联 style 属性`).not.toMatch(/\sstyle=/);
+    }
+
+    // 页面不渲染任何远程图片，CSP 必须保持无 https: 通配图片源
+    expect(html).toContain("img-src 'self' data:");
+    expect(html).not.toMatch(/img-src[^;]*https:/);
+    expect(html).toContain('rel="preconnect" href="https://api.rss2json.com"');
+    expect(html).not.toContain('name="keywords"');
   });
 });
 
@@ -73,13 +168,30 @@ describe('social image metadata', () => {
   });
 });
 
+describe('theme bootstrap consistency', () => {
+  it('keeps theme colors aligned across html, runtime module and boot script', () => {
+    const html = readProjectFile('./index.html');
+    const themeModule = readProjectFile('./lib/theme.ts');
+    const bootScript = readProjectFile('./public/theme-init.js');
+
+    expect(themeModule).toContain('#F3F0E8');
+    expect(themeModule).toContain('#171611');
+    expect(bootScript).toContain('#F3F0E8');
+    expect(bootScript).toContain('#171611');
+    expect(html).toContain('content="#F3F0E8"');
+  });
+});
+
 describe('visible copy', () => {
   it('keeps the page concise without changing the articles description', () => {
     const pageCopy = [
       readProjectFile('./App.tsx'),
       readProjectFile('./components/Hero.tsx'),
+      readProjectFile('./components/TerminalIntro.tsx'),
       readProjectFile('./components/Projects.tsx'),
       readProjectFile('./components/FeaturedProjects.tsx'),
+      readProjectFile('./components/SectionHeading.tsx'),
+      readProjectFile('./components/SiteHeader.tsx'),
       readProjectFile('./constants.tsx'),
     ].join('\n');
 
@@ -93,17 +205,23 @@ describe('visible copy', () => {
       expect(pageCopy).not.toContain(removedPhrase);
     }
 
-    expect(pageCopy).toContain('也承担版本发布前的集中测试。');
-    expect(pageCopy).toContain('使用 Jira、禅道和飞书跟进需求、缺陷与版本进度。');
-    expect(pageCopy).toContain('记录工程实践、工具开发，也记录生活中值得反复回看的片段。');
+    expect(pageCopy).toContain('在复杂的系统里');
+    expect(pageCopy).toContain('测试可靠性');
+    expect(pageCopy).toContain('浮生闲趣');
+    expect(pageCopy).toContain('whoami');
+    expect(pageCopy).toContain('测试工程师 / 独立开发者');
+    expect(pageCopy).toContain('浮生闲记 · 把闲趣写进日常');
     expect(pageCopy).toContain("label: '关于我'");
-    expect(pageCopy).toContain("title=\"专业能力\"");
-    expect(pageCopy).toContain('>开源项目</h2>');
-    expect(pageCopy).toContain('title="最近博客"');
-    expect(pageCopy).toContain('>ABOUT ME</span>');
-    expect(pageCopy).toContain('label="Capabilities"');
-    expect(pageCopy).toContain('>Open source projects</span>');
-    expect(pageCopy).toContain('label="Recent posts"');
-    expect(pageCopy).toContain('>TESTING / TOOLING</span>');
+    for (const requiredCopy of [
+      '专业能力',
+      '开源项目',
+      '最近博客',
+      'ABOUT ME',
+      'Capabilities',
+      'Open source projects',
+      'Recent posts',
+    ]) {
+      expect(pageCopy).toContain(requiredCopy);
+    }
   });
 });
