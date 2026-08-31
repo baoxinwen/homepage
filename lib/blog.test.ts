@@ -116,3 +116,46 @@ describe('RSS request', () => {
     expect(BLOG_REQUEST_TIMEOUT_MS).toBe(8_000);
   });
 });
+
+describe('cache read-path hardening', () => {
+  const writeRawCache = (storage: ReturnType<typeof createStorage>, posts: unknown[]) => {
+    storage.setItem(BLOG_CACHE_KEY, JSON.stringify({
+      version: 1,
+      fetchedAt: Date.now(),
+      posts,
+    }));
+  };
+
+  const trustedPost = (overrides: Record<string, unknown> = {}) => ({
+    title: '正常标题',
+    link: 'https://xsfly.com/posts/trusted',
+    pubDate: '2026-07-20T08:00:00Z',
+    dateLabel: '2026/07/20',
+    description: '正常摘要。',
+    readTimeMinutes: 1,
+    ...overrides,
+  });
+
+  it('caps cached posts at three regardless of stored size', () => {
+    const storage = createStorage();
+    writeRawCache(storage, Array.from({ length: 500 }, (_, index) => trustedPost({
+      link: `https://xsfly.com/posts/${index}`,
+    })));
+
+    expect(readBlogCache(storage)?.posts).toHaveLength(3);
+  });
+
+  it('strips markup injected into cached titles and descriptions', () => {
+    const storage = createStorage();
+    writeRawCache(storage, [trustedPost({
+      title: '<img src=x onerror=alert(1)>被篡改的标题',
+      description: '<b>加粗</b>的摘要正文',
+    })]);
+
+    const [post] = readBlogCache(storage)?.posts ?? [];
+    expect(post?.title).toBe('被篡改的标题');
+    expect(post?.description).toBe('加粗的摘要正文');
+    expect(post?.title).not.toContain('<');
+    expect(post?.description).not.toContain('<');
+  });
+});

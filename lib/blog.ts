@@ -39,10 +39,11 @@ const isRecord = (value: unknown): value is Record<string, unknown> => (
   typeof value === 'object' && value !== null
 );
 
+// 使用 inert 的 DOMParser 文档剥离 HTML：不会加载图片、不触发事件处理器、
+// 不执行脚本（innerHTML 在游离节点上仍会发起图片请求并可能触发 onerror）。
 const htmlToPlainText = (html: string): string => {
-  const container = document.createElement('div');
-  container.innerHTML = html;
-  return (container.textContent || '').replace(/\s+/g, ' ').trim();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return (doc.documentElement.textContent ?? '').replace(/\s+/g, ' ').trim();
 };
 
 const normalizeBlogLink = (value: unknown): string | null => {
@@ -135,6 +136,25 @@ const isBlogPost = (value: unknown): value is BlogPost => {
     && Number(value.readTimeMinutes) >= 1;
 };
 
+// 缓存读路径与 RSS 解析路径执行同一套净化：上限 3 条，标题/摘要重新剥 HTML
+// 并截断。防止被篡改的 localStorage 数据绕过写路径限制，放大成持久化的
+// 页面内容伪装或超量 DOM 渲染。
+const sanitizeCachedPosts = (posts: BlogPost[]): BlogPost[] => (
+  posts.slice(0, 3).map((post) => {
+    const description = createExcerpt(htmlToPlainText(post.description));
+    return {
+      ...post,
+      title: htmlToPlainText(post.title) || '未命名文章',
+      description,
+      readTimeMinutes: (
+        Number.isInteger(post.readTimeMinutes) && post.readTimeMinutes >= 1
+          ? post.readTimeMinutes
+          : calculateReadTime(description)
+      ),
+    };
+  })
+);
+
 export const readBlogCache = (
   storage: ReadableStorage | null,
   now = Date.now(),
@@ -158,7 +178,7 @@ export const readBlogCache = (
     if (age < 0 || age > BLOG_CACHE_MAX_AGE_MS) return null;
 
     return {
-      posts: value.posts,
+      posts: sanitizeCachedPosts(value.posts),
       freshness: age <= BLOG_CACHE_FRESH_MS ? 'fresh' : 'stale',
     };
   } catch {
