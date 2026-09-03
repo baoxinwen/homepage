@@ -4,33 +4,32 @@
 
 线上主页部署于 [https://baoxw.com](https://baoxw.com)，技术博客运行于 [https://xsfly.com](https://xsfly.com)；页面元数据（canonical、Open Graph、Twitter Card）以 `baoxw.com` 为准。
 
-![License](https://img.shields.io/badge/license-MIT-191813.svg)
-![React](https://img.shields.io/badge/react-19.2-E85D2A.svg)
-![TypeScript](https://img.shields.io/badge/typescript-5.8-2F7657.svg)
-![Vite](https://img.shields.io/badge/vite-6.4-676258.svg)
+![License](https://img.shields.io/badge/license-MIT-A63A24.svg)
+![React](https://img.shields.io/badge/react-19.2-211D16.svg)
+![TypeScript](https://img.shields.io/badge/typescript-5.8-2F6B4F.svg)
+![Vite](https://img.shields.io/badge/vite-6-8F8776.svg)
 
 ## 页面内容
 
-- 关于我：通栏两行宣言（「浮生闲趣」强调）+ 终端独白式自我介绍（打字机效果，尊重 reduced-motion）+ 实时冒烟测试条
-- 专业能力：四组技术栈的双列清单
-- 开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor（视觉优先的卡片）
+- 关于我：衬线巨字宣言（「浮生闲趣」朱砂强调）+ 「墨窗」终端独白（打字机效果，尊重 reduced-motion）+ 实时冒烟测试条（仅开发环境渲染）
+- 专业能力：四组技术栈的册页式行清单
+- 开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor、PromptMate、douyin-download（窗口式预览卡片）
 - 最近博客：通过 RSS 展示最新文章标题与摘要
-- 深色/浅色主题与响应式布局
+- 宣纸昼/墨夜双主题与响应式布局
 
 ## 视觉系统
 
-页面采用“Technical Field Notes / 工程手记”方向，以暖纸色、墨黑、信号橙和工程绿构成统一的编辑式界面。
+页面采用「宣纸与墨」方向：宣纸暖白与墨夜双主题、朱砂印章式强调、衬线巨字主导的编辑式排版；工程身份由网格秩序与等宽数据字体隐性表达。
 
-| 语义 | 浅色模式 | 深色模式 |
+| 语义 | 宣纸昼 | 墨夜 |
 | --- | --- | --- |
-| 页面背景 | `#F3F0E8` | `#171611` |
-| 主要文字 | `#191813` | `#EDE8DC` |
-| 主强调色 | `#E85D2A` | `#FF7043` |
-| 小字号强调文字 | `#BD4218` | `#FF7043` |
-| 成功状态 | `#2F7657` | `#5AAA7C` |
-| 边框 | `#CCC7B9` | `#37342B` |
+| 页面背景 | `#F6F3EC` | `#16130E` |
+| 主要文字 | `#211D16` | `#ECE5D6` |
+| 朱砂强调 | `#A63A24` | `#D0654A` |
+| 成功状态 | `#2F6B4F` | `#8FB99A` |
+| 墨线（常规/加重） | `#DDD6C6` / `#B9B09B` | `#332D22` / `#4C4433` |
 
-全站样式由 `styles.css` 中的语义变量和组件类维护，不依赖运行时 CSS CDN。标题、正文与技术标签分别使用本机宋体、黑体和等宽字体栈，无需下载字体资源。排印采用字号特定字距（大字号负字距、等宽标签正字距），动效统一使用 `--ease-out` / `--ease-in-out` 缓动令牌；导航为半透明悬浮材质（支持 `prefers-reduced-transparency` 回退）。
+全站样式由 `styles.css` 中三层设计令牌（原始色板 / 语义令牌 / 组件令牌）与组件类维护，不依赖运行时 CSS CDN。显示层使用自托管的 Noto Serif SC、数据层使用 JetBrains Mono（`@fontsource` 分片按 `unicode-range` 惰性加载），正文回退到本机黑体栈；30 组前景/背景配对由测试锁定 WCAG AA。动效统一使用 `--ease-out` / `--ease-in-out` 缓动令牌；导航为半透明悬浮材质（支持 `prefers-reduced-transparency` 回退）。
 
 社交分享图位于 `public/og-image.png`。如需改版，可使用 Python 3 与 Pillow 运行 `scripts/generate_og_image.py` 重新生成。
 
@@ -75,6 +74,8 @@ homepage/
 │   ├── Hero.tsx
 │   ├── Projects.tsx
 │   ├── FeaturedProjects.tsx
+│   ├── SectionHeading.tsx
+│   ├── SiteHeader.tsx
 │   ├── SmokeTest.tsx
 │   └── TerminalIntro.tsx
 ├── lib/
@@ -102,6 +103,7 @@ homepage/
 
 - 使用 CSP 限制脚本、图片与网络请求来源
 - 不依赖内联脚本或内联样式，首屏主题由同源脚本安全初始化
+- 字体经 `@fontsource` 自托管（`font-src 'self'`），不请求第三方字体 CDN
 - 外部链接使用 `noopener noreferrer`
 - 支持键盘焦点、文字选择、复制、打印及 `prefers-reduced-motion`
 - 主题选择保存在 `localStorage`；未主动选择时持续跟随系统偏好
