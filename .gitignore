@@ -67,3 +67,6 @@ CLAUDE.md
 # Local AI agent tools
 .agents/
 .codex/
+
+# Redesign working screenshots (before/after comparisons, not for repo)
+.redesign-shots/
