@@ -86,7 +86,7 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     name: 'MemeMaker',
     category: '浏览器创作工具',
-    description: '浏览器里的表情包工厂，素材不离开本地。',
+    description: '纯浏览器端的表情包工厂：头像与文字编辑、PNG/GIF 导出与自定义模板。',
     stack: ['React', 'TypeScript', 'PWA'],
     repoUrl: 'https://github.com/baoxinwen/MemeMaker',
     secondaryLink: {
@@ -99,7 +99,7 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     name: 'Ledger',
     category: '本地优先账本',
-    description: '中文记账应用，支持 Docker 自部署。',
+    description: '中文记账应用，支持收支预算与支付宝/微信账单导入，Docker 自部署。',
     stack: ['React', 'SQLite', 'Docker'],
     repoUrl: 'https://github.com/baoxinwen/Ledger',
     secondaryLink: {
@@ -112,7 +112,7 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     name: 'CopyTree',
     category: 'Windows 效率工具',
-    description: '目录树一键复制为文本或 Markdown。',
+    description: '右键一键把目录树复制为文本、Markdown、JSON 等 7 种格式。',
     stack: ['Python', 'ctypes', 'PyInstaller'],
     repoUrl: 'https://github.com/baoxinwen/CopyTree',
     secondaryLink: {
@@ -138,7 +138,7 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
     name: 'hotsearch-monitor',
     category: '热搜监控平台',
-    description: '聚合 40+ 中文平台热搜与趋势推送。',
+    description: '聚合 47 个中文平台热搜，关键词过滤与趋势推送，Docker 一键部署。',
     stack: ['React', 'FastAPI', 'Docker'],
     repoUrl: 'https://github.com/baoxinwen/hotsearch-monitor',
     secondaryLink: {
@@ -147,6 +147,32 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     },
     visual: 'trend',
     size: 'compact'
+  },
+  {
+    name: 'PromptMate',
+    category: '桌面效率工具',
+    description: '本地优先的跨平台提示词助手，把常用的提示词装进每个人自己的桌面。',
+    stack: ['Rust', 'Tauri 2', 'Vue 3'],
+    repoUrl: 'https://github.com/baoxinwen/PromptMate',
+    secondaryLink: {
+      label: '下载最新版',
+      url: 'https://github.com/baoxinwen/PromptMate/releases/latest'
+    },
+    visual: 'prompt',
+    size: 'wide'
+  },
+  {
+    name: 'douyin-download',
+    category: '自托管工作台',
+    description: '抖音长期运行工作台：采集关注与粉丝、订阅与连续下载，双容器部署。',
+    stack: ['Python', 'DouK', 'Docker'],
+    repoUrl: 'https://github.com/baoxinwen/douyin-download',
+    secondaryLink: {
+      label: '下载最新版',
+      url: 'https://github.com/baoxinwen/douyin-download/releases/latest'
+    },
+    visual: 'download',
+    size: 'wide'
   }
 ];
 
