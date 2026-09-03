@@ -7,6 +7,22 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-03
+
+### Added
+
+- 精选项目新增 PromptMate（Rust/Tauri 桌面提示词助手）与 douyin-download（自托管抖音工作台），卡片布局扩展为七项并附 Latest Release 下载入口
+- 自托管字体：Noto Serif SC 与 JetBrains Mono 经 `@fontsource` 按 unicode-range 分片加载，衬线显示与等宽数据在各平台渲染一致
+
+### Changed
+
+- 整站视觉重设计为「宣纸与墨」：宣纸昼/墨夜双主题、朱砂印章式强调、衬线巨字编辑排版与三层设计令牌（原始色板/语义/组件）；项目预览保留窗口式构图并以新令牌重新着色
+- README 视觉说明与主题色契约测试字面量同步新体系，30 组前景/背景配对由测试锁定 WCAG AA
+
+### Security
+
+- 升级开发依赖 browserslist，修复无界内存增长高危通告（GHSA-c83g-rgw3-j3cx），`npm audit` 高危归零
+
 ## [1.0.0] - 2026-08-31
 
 ### Added
@@ -32,5 +48,6 @@
 - CSP 限制脚本、图片与网络请求来源，不依赖内联脚本或内联样式
 - 外部链接统一使用 `noopener noreferrer`
 
-[Unreleased]: https://github.com/baoxinwen/homepage/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/baoxinwen/homepage/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/baoxinwen/homepage/releases/tag/v1.1.0
 [1.0.0]: https://github.com/baoxinwen/homepage/releases/tag/v1.0.0
