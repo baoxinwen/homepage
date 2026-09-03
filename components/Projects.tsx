@@ -77,7 +77,7 @@ const Projects: React.FC = () => {
   return (
     <div className="content-shell">
       <section id="capabilities" className="capabilities-section" aria-labelledby="capabilities-title">
-        <SectionHeading index="02" label="Capabilities" title="专业能力" titleId="capabilities-title" />
+        <SectionHeading index="贰" label="Capabilities" title="专业能力" titleId="capabilities-title" />
 
         <div className="capability-list">
           {TECH_GROUPS.map((group) => (
@@ -99,7 +99,7 @@ const Projects: React.FC = () => {
 
       <section id="articles" className="articles-section" aria-labelledby="articles-title">
         <SectionHeading
-          index="04"
+          index="肆"
           label="Recent posts"
           title="最近博客"
           titleId="articles-title"

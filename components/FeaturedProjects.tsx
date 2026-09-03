@@ -7,6 +7,7 @@ const sizeStyles: Record<FeaturedProject['size'], string> = {
   lead: 'project-card--lead',
   support: 'project-card--support',
   compact: 'project-card--compact',
+  wide: 'project-card--wide',
 };
 
 const WindowBar: React.FC<{ label: string }> = ({ label }) => (
@@ -51,7 +52,7 @@ const TreeVisual: React.FC = () => (
       <div className="tree-lines">
         <p><b>●</b> my-project/</p>
         <p><span>└──</span> src/</p>
-        <p>README.md <em>✓ copied</em></p>
+        <p>README.md <em>✓ 已复制</em></p>
       </div>
     </div>
   </div>
@@ -85,12 +86,40 @@ const TrendVisual: React.FC = () => (
   </div>
 );
 
+const PromptVisual: React.FC = () => (
+  <div className="project-visual project-visual--prompt" data-print-hidden="true">
+    <div className="visual-window prompt-window">
+      <WindowBar label="PROMPTMATE" />
+      <div className="prompt-preview">
+        <p className="prompt-title">周报生成器</p>
+        <div className="prompt-lines" aria-hidden="true"><i /><i /></div>
+        <div className="prompt-tags" aria-hidden="true"><span>写作</span><span>工作</span><span>本地存储</span></div>
+      </div>
+    </div>
+  </div>
+);
+
+const DownloadVisual: React.FC = () => (
+  <div className="project-visual project-visual--download" data-print-hidden="true">
+    <div className="visual-window download-window">
+      <WindowBar label="DOUYIN / TASKS" />
+      <div className="download-preview">
+        <p className="download-title">订阅更新 · 3 个新视频 <em>✓ 运行中</em></p>
+        <div className="download-progress" aria-hidden="true"><i /></div>
+        <p className="download-meta">采集关注 · 连续下载 · DOCKER</p>
+      </div>
+    </div>
+  </div>
+);
+
 const visualComponents: Record<ProjectVisualType, React.FC> = {
   meme: MemeVisual,
   ledger: LedgerVisual,
   tree: TreeVisual,
   map: MapVisual,
   trend: TrendVisual,
+  prompt: PromptVisual,
+  download: DownloadVisual,
 };
 
 const ProjectVisual: React.FC<{ visual: ProjectVisualType }> = ({ visual }) => {
@@ -101,7 +130,7 @@ const ProjectVisual: React.FC<{ visual: ProjectVisualType }> = ({ visual }) => {
 const FeaturedProjects: React.FC = () => (
   <section id="projects" className="projects-section" aria-labelledby="featured-projects-title">
     <SectionHeading
-      index="03"
+      index="叁"
       label="Open source projects"
       title="开源项目"
       titleId="featured-projects-title"

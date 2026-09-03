@@ -12,5 +12,5 @@
   document.documentElement.classList.toggle('dark', isDark);
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', isDark ? '#171611' : '#F3F0E8');
+    ?.setAttribute('content', isDark ? '#16130E' : '#F6F3EC');
 }());

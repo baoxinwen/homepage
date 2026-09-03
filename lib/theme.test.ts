@@ -9,7 +9,7 @@ import {
 describe('theme preferences', () => {
   beforeEach(() => {
     document.documentElement.className = '';
-    document.head.innerHTML = '<meta name="theme-color" content="#F3F0E8">';
+    document.head.innerHTML = '<meta name="theme-color" content="#F6F3EC">';
   });
 
   it('prefers an explicit valid choice over the system theme', () => {
@@ -31,7 +31,7 @@ describe('theme preferences', () => {
 
     applyTheme('dark');
     expect(document.documentElement.classList.contains('dark')).toBe(true);
-    expect(document.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#171611');
+    expect(document.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#16130E');
 
     applyTheme('light');
     expect(document.documentElement.classList.contains('dark')).toBe(false);

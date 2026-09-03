@@ -43,10 +43,7 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ isDark, onToggleTheme }) => {
     <header className="site-header">
       <div className="nav-shell">
         <a className="brand" href="#about" aria-label="返回个人介绍">
-          <span className="brand-mark" aria-hidden="true">
-            <span>BXW</span>
-            <i />
-          </span>
+          <span className="brand-mark" aria-hidden="true">浮</span>
           <span className="brand-name">浮生闲记</span>
         </a>
 

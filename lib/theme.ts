@@ -45,5 +45,5 @@ export const applyTheme = (theme: Theme, targetDocument: Document = document): v
   targetDocument.documentElement.classList.toggle('dark', isDark);
   targetDocument
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute('content', isDark ? '#171611' : '#F3F0E8');
+    ?.setAttribute('content', isDark ? '#16130E' : '#F6F3EC');
 };

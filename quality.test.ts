@@ -174,11 +174,11 @@ describe('theme bootstrap consistency', () => {
     const themeModule = readProjectFile('./lib/theme.ts');
     const bootScript = readProjectFile('./public/theme-init.js');
 
-    expect(themeModule).toContain('#F3F0E8');
-    expect(themeModule).toContain('#171611');
-    expect(bootScript).toContain('#F3F0E8');
-    expect(bootScript).toContain('#171611');
-    expect(html).toContain('content="#F3F0E8"');
+    expect(themeModule).toContain('#F6F3EC');
+    expect(themeModule).toContain('#16130E');
+    expect(bootScript).toContain('#F6F3EC');
+    expect(bootScript).toContain('#16130E');
+    expect(html).toContain('content="#F6F3EC"');
   });
 });
 

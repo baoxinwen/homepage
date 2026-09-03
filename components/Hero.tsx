@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
       <div className="hero-columns">
         <div className="hero-copy">
           <div className="section-kicker reveal reveal-delay-1">
-            <span>01</span>
+            <span>壹</span>
             <i />
             <span>ABOUT ME</span>
           </div>

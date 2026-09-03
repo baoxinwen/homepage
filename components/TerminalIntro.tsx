@@ -65,6 +65,10 @@ export default function TerminalIntro(): React.ReactElement {
         测试工程师 / 独立开发者。开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor。
         家在北纬 32.0983 度，东经 118.2732 度。浮生闲记 · 把闲趣写进日常。
       </p>
+      <div className="ink-window-head" aria-hidden="true">
+        <span>闲记 · 自述</span>
+        <b>SH/01</b>
+      </div>
       <div className="terminal-intro">
         {rows.map((row, index) => (
           <p key={index} className="ti-row">
