@@ -85,6 +85,8 @@ describe('accessibility and security contracts', () => {
       pair(':root', 'success', 'canvas', 4.5),
       // hero 强调标题为 clamp(2.5rem, 6vw, 4.75rem)/800，适用 AA Large 阈值
       pair(':root', 'accent', 'canvas', 3.0),
+      // faint 仅剩非正文用途（行尾箭头图标、开发期自检条），按 1.4.11 非文字 3:1 锁定
+      pair(':root', 'faint', 'canvas', 3.0),
       // 项目卡片深底 mockup 的成对面板配色
       pair(':root', 'panel-accent', 'panel-bg', 4.5),
       pair(':root', 'panel-success', 'panel-bg', 4.5),
@@ -102,6 +104,7 @@ describe('accessibility and security contracts', () => {
       pair('.dark', 'accent-contrast', 'accent-text', 4.5),
       pair('.dark', 'success', 'canvas', 4.5),
       pair('.dark', 'accent', 'canvas', 3.0),
+      pair('.dark', 'faint', 'canvas', 3.0),
       pair('.dark', 'panel-accent', 'panel-bg', 4.5),
       pair('.dark', 'panel-success', 'panel-bg', 4.5),
       pair('.dark', 'panel-muted', 'panel-bg', 4.5),

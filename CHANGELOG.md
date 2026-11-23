@@ -13,6 +13,14 @@
 - 终端独白改流式打字：命令逐字步进 64ms→30ms，单字与输出行均以 90ms 从 `blur(6px)` 晕开至清晰，`prefers-reduced-motion` 下直出全文
 - 移动端菜单改用 Grid `0fr→1fr` 高度过渡折叠，免 JS 算高、收起归零（原为 display 切换加浮现动画）；面板内边距移至链接自身，避免 Grid 轨道残留
 - 细节对齐：行内图标 `vertical-align: -0.125em` 对齐文字中线，序号/日期等数字位加 `tabular-nums` 锁等宽，正文段落加 `text-wrap: pretty` 防孤字
+- 区块 kicker 统一大写呈现（`text-transform: uppercase`，源文本保持自然大小写），按压反馈统一 0.96（清理 0.94/0.97 死代码）；次级项目链接 hover 底色改由 `ink 7%` 混合派生，不再借用分隔线令牌
+
+### Fixed
+
+- `--faint` 用作正文级文字对比度仅 3.2:1 不达 WCAG AA（测试契约盲区）：项目序号、文章日期/摘要/阅读时长、页脚版权改用 `--muted`（≥6.2:1）；`--faint` 保留给箭头图标与开发期自检条，由测试按 1.4.11 非文字 3:1 锁定
+- 品牌链接 aria-label 纳入可见文字「浮生闲记」，满足 WCAG 2.5.3 Label in Name
+- 根元素补 `scroll-padding-block-start`（96px，窄屏 80px），Tab 焦点不再被粘性导航遮挡（WCAG 2.4.11）
+- 5 处未门控的 `:hover` 包进 `@media (hover: hover) and (pointer: fine)`，触屏点按不再粘滞悬停态；删除页脚联系链接容器上不生效的 `aria-label`
 
 ## [1.1.0] - 2026-09-03
 

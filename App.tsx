@@ -74,7 +74,7 @@ const App: React.FC = () => {
             <p className="footer-brand">浮生闲记</p>
           </div>
 
-          <div className="footer-links" aria-label="联系方式">
+          <div className="footer-links">
             {SOCIAL_LINKS.map((link) => {
               const isExternal = link.url.startsWith('http');
               return (

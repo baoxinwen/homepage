@@ -87,6 +87,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* 粘性头的高度豁免：Tab 聚焦的元素滚入视口时不被头部遮住（WCAG 2.4.11），
+     与各区块的 scroll-margin-top 同源取 96px */
+  scroll-padding-block-start: 96px;
   background: var(--canvas);
   color-scheme: light;
 }
@@ -170,8 +173,10 @@ a {
   transition: background-color 160ms ease;
 }
 
-.article-row:hover {
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
+@media (hover: hover) and (pointer: fine) {
+  .article-row:hover {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
 }
 
 .reveal {
@@ -411,15 +416,17 @@ a {
   transition: transform 260ms var(--ease-out);
 }
 
-.nav-link:hover,
-.nav-external:hover {
-  color: var(--ink);
-}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover,
+  .nav-external:hover {
+    color: var(--ink);
+  }
 
-.nav-link:hover::after,
-.nav-external:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+  .nav-link:hover::after,
+  .nav-external:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 .nav-actions {
@@ -441,12 +448,14 @@ a {
 }
 
 .nav-icon-button:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
-.nav-icon-button:hover {
-  background: var(--surface);
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .nav-icon-button:hover {
+    background: var(--surface);
+    color: var(--accent);
+  }
 }
 
 /* 移动端菜单：按钮与面板默认不参与桌面布局，仅在 ≤720 显示 */
@@ -488,6 +497,8 @@ a {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.22em;
+  /* 全站 kicker 统一大写呈现（中文序号不受影响），源文本保持自然大小写 */
+  text-transform: uppercase;
 }
 
 .section-kicker i {
@@ -546,10 +557,12 @@ a {
   border-bottom: 1px solid var(--line-strong);
 }
 
-.text-link:hover,
-.button-text:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover,
+  .button-text:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
 }
 
 .button-primary,
@@ -568,15 +581,14 @@ a {
   transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out), background-color var(--dur-ui) ease, color var(--dur-ui) ease;
 }
 
-/* 按压反馈：让界面「听得见」用户 */
-.button-primary:active,
-.button-secondary:active,
+/* 按压反馈：让界面「听得见」用户。按钮类走各自的位移+投影塌缩语系（见下），
+   链接与图标类统一缩放到 0.96 */
 .nav-icon-button:active,
 .text-link:active,
 .button-text:active,
 .project-source-link:active,
 .project-secondary-link:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 /* 主按钮：朱砂印面，带可生长的偏移投影；副按钮同语系，靠纸面分层与投影定形 */
@@ -1393,7 +1405,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  color: var(--faint);
+  color: var(--muted);
   font-family: var(--font-mono-stack);
   font-size: 0.68rem;
   letter-spacing: 0.14em;
@@ -1484,7 +1496,7 @@ a {
   }
 
   .project-secondary-link:hover {
-    background: var(--line);
+    background: color-mix(in srgb, var(--ink) 7%, var(--surface-alt));
   }
 }
 
@@ -1522,7 +1534,7 @@ a {
 
 .article-index { color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
 .article-row time,
-.article-read-time { color: var(--faint); font-variant-numeric: tabular-nums; }
+.article-read-time { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .article-copy {
   min-width: 0;
@@ -1549,7 +1561,7 @@ a {
 .article-copy p {
   margin: 0.38rem 0 0;
   overflow: hidden;
-  color: var(--faint);
+  color: var(--muted);
   font-size: 0.78rem;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1647,11 +1659,13 @@ a {
   transition: color var(--dur-ui) ease;
 }
 
-.footer-links a:hover { color: var(--accent); }
+@media (hover: hover) and (pointer: fine) {
+  .footer-links a:hover { color: var(--accent); }
+}
 
 .footer-copyright {
   margin: 0;
-  color: var(--faint);
+  color: var(--muted);
   font-family: var(--font-mono-stack);
   font-size: 0.66rem;
   letter-spacing: 0.1em;
@@ -1706,6 +1720,10 @@ a {
 }
 
 @media (max-width: 720px) {
+  html {
+    scroll-padding-block-start: 80px;
+  }
+
   .nav-shell,
   .hero-section,
   .content-shell,
