@@ -182,6 +182,30 @@ describe('theme bootstrap consistency', () => {
   });
 });
 
+describe('first-paint critical path', () => {
+  it('loads font face declarations through the lazy entry, not static imports', () => {
+    // 评审 M-4：字体声明表约 266KB（gzip 115KB），必须由首帧后的动态 import
+    // 加载，禁止静态导入与业务样式合并进阻塞 chunk
+    const entry = readProjectFile('./index.tsx');
+    expect(entry, '入口不得静态导入 @fontsource').not.toMatch(
+      /^import\s+['"]@fontsource\//m,
+    );
+    expect(entry).toContain("import('./fonts')");
+
+    const fontEntry = readProjectFile('./fonts.ts');
+    for (const family of [
+      'noto-serif-sc/600',
+      'noto-serif-sc/900',
+      'jetbrains-mono/400',
+      'jetbrains-mono/700',
+    ]) {
+      expect(fontEntry, `fonts.ts 缺少字重声明：${family}`).toContain(
+        `@fontsource/${family}.css`,
+      );
+    }
+  });
+});
+
 describe('visible copy', () => {
   it('keeps the page concise without changing the articles description', () => {
     const pageCopy = [

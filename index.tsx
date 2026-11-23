@@ -1,10 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// 自托管字体（CSP font-src 'self'）：宋体衬线做显示层，等宽做数据层
-import '@fontsource/noto-serif-sc/600.css';
-import '@fontsource/noto-serif-sc/900.css';
-import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/700.css';
 import App from './App';
 
 if (import.meta.env.DEV) {
@@ -26,3 +21,9 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// 字体声明表走惰性入口（评审 M-4）：双 rAF 确保触发点晚于首帧，期间由
+// --font-*-stack 兜底换装；rAF 在 bfcache 恢复后正常续跑，无 load 事件陷阱。
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  void import('./fonts');
+}));
