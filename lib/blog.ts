@@ -33,6 +33,8 @@ const dateFormatter = new Intl.DateTimeFormat('zh-CN', {
   year: 'numeric',
   month: '2-digit',
   day: '2-digit',
+  // 固定按博客源站时区（UTC+8）取日，访客本地时区不再使日期标签漂移一天
+  timeZone: 'Asia/Shanghai',
 });
 
 const isRecord = (value: unknown): value is Record<string, unknown> => (
