@@ -98,36 +98,39 @@ const SiteHeader: React.FC<SiteHeaderProps> = ({ isDark, onToggleTheme }) => {
         </div>
       </div>
 
-      {/* 移动端导航面板：小屏收纳被隐藏的锚点与外链，点击任意项即收起 */}
+      {/* 移动端导航面板：小屏收纳被隐藏的锚点与外链，点击任意项即收起。
+          内层 panel 承载折叠（overflow+min-height），外层只管 0fr→1fr 过渡 */}
       <nav
         id="mobile-nav-panel"
         className="mobile-nav"
         data-open={menuOpen}
         aria-label="全站导航"
       >
-        {NAV_ITEMS.map((item, index) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className={item.secondary ? 'mobile-nav-link mobile-nav-link--secondary' : 'mobile-nav-link'}
-            onClick={() => setMenuOpen(false)}
-          >
-            <span>{item.label}</span>
-            <i aria-hidden="true">{String(index + 1).padStart(2, '0')}</i>
-          </a>
-        ))}
-        {blogLink && (
-          <a
-            className="mobile-nav-link"
-            href={blogLink.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            <span>博客</span>
-            <i aria-hidden="true">↗</i>
-          </a>
-        )}
+        <div className="mobile-nav-panel">
+          {NAV_ITEMS.map((item, index) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className={item.secondary ? 'mobile-nav-link mobile-nav-link--secondary' : 'mobile-nav-link'}
+              onClick={() => setMenuOpen(false)}
+            >
+              <span>{item.label}</span>
+              <i aria-hidden="true">{String(index + 1).padStart(2, '0')}</i>
+            </a>
+          ))}
+          {blogLink && (
+            <a
+              className="mobile-nav-link"
+              href={blogLink.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              <span>博客</span>
+              <i aria-hidden="true">↗</i>
+            </a>
+          )}
+        </div>
       </nav>
     </header>
   );
