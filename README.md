@@ -13,7 +13,7 @@
 
 - 关于我：衬线巨字宣言（「浮生闲趣」朱砂强调）+ 「墨窗」终端独白（打字机效果，尊重 reduced-motion）+ 实时冒烟测试条（仅开发环境渲染）
 - 专业能力：四组技术栈的册页式行清单
-- 开源项目：MemeMaker、Ledger、CopyTree、footprint、hotsearch-monitor、PromptMate、douyin-download（窗口式预览卡片）
+- 开源项目：meme-maker、renovation-expenses、copy-tree、footprint、idle-fish、prompt-tool、home-stock（窗口式预览卡片）
 - 最近博客：通过 RSS 展示最新文章标题与摘要
 - 宣纸昼/墨夜双主题与响应式布局
 

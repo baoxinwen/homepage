@@ -14,7 +14,7 @@ export interface BlogPost {
   readTimeMinutes: number;
 }
 
-export type ProjectVisual = 'meme' | 'ledger' | 'tree' | 'map' | 'trend' | 'prompt' | 'download';
+export type ProjectVisual = 'meme' | 'ledger' | 'tree' | 'map' | 'quote' | 'prompt' | 'stock';
 
 export type ProjectCardSize = 'lead' | 'support' | 'compact' | 'wide';
 

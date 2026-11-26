@@ -84,11 +84,11 @@ export const TECH_GROUPS = [
 
 export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
-    name: 'MemeMaker',
+    name: 'meme-maker',
     category: '浏览器创作工具',
-    description: '纯浏览器端的表情包工厂：头像与文字编辑、PNG/GIF 导出与自定义模板。',
+    description: '纯浏览器端的表情包生成器：选模板、上传头像、加文字，一键导出 PNG/GIF，图片不上传服务器。',
     stack: ['React', 'TypeScript', 'PWA'],
-    repoUrl: 'https://github.com/baoxinwen/MemeMaker',
+    repoUrl: 'https://github.com/baoxinwen/meme-maker',
     secondaryLink: {
       label: '在线体验',
       url: 'https://meme.baoxinwen.top'
@@ -97,27 +97,27 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     size: 'lead'
   },
   {
-    name: 'Ledger',
-    category: '本地优先账本',
-    description: '中文记账应用，支持收支预算与支付宝/微信账单导入，Docker 自部署。',
-    stack: ['React', 'SQLite', 'Docker'],
-    repoUrl: 'https://github.com/baoxinwen/Ledger',
+    name: 'renovation-expenses',
+    category: '装修专项账本',
+    description: '清单式预算、定金尾款与票据留存的装修记账，数据 100% 本地自托管。',
+    stack: ['React', 'Fastify', 'SQLite', 'Docker'],
+    repoUrl: 'https://github.com/baoxinwen/renovation-expenses',
     secondaryLink: {
-      label: '在线体验',
-      url: 'https://ledger.baoxinwen.top'
+      label: '下载最新版',
+      url: 'https://github.com/baoxinwen/renovation-expenses/releases/latest'
     },
     visual: 'ledger',
     size: 'support'
   },
   {
-    name: 'CopyTree',
+    name: 'copy-tree',
     category: 'Windows 效率工具',
     description: '右键一键把目录树复制为文本、Markdown、JSON 等 7 种格式。',
     stack: ['Python', 'ctypes', 'PyInstaller'],
-    repoUrl: 'https://github.com/baoxinwen/CopyTree',
+    repoUrl: 'https://github.com/baoxinwen/copy-tree',
     secondaryLink: {
       label: '下载最新版',
-      url: 'https://github.com/baoxinwen/CopyTree/releases/latest'
+      url: 'https://github.com/baoxinwen/copy-tree/releases/latest'
     },
     visual: 'tree',
     size: 'compact'
@@ -136,42 +136,42 @@ export const FEATURED_PROJECTS: FeaturedProject[] = [
     size: 'compact'
   },
   {
-    name: 'hotsearch-monitor',
-    category: '热搜监控平台',
-    description: '聚合 47 个中文平台热搜，关键词过滤与趋势推送，Docker 一键部署。',
-    stack: ['React', 'FastAPI', 'Docker'],
-    repoUrl: 'https://github.com/baoxinwen/hotsearch-monitor',
+    name: 'idle-fish',
+    category: '报价经营工具',
+    description: '铝型材机柜报价器：报价、订单、3D 预览与经营统计，PWA 单用户自部署。',
+    stack: ['React', 'Three.js', 'Express', 'Docker'],
+    repoUrl: 'https://github.com/baoxinwen/idle-fish',
     secondaryLink: {
-      label: '在线体验',
-      url: 'https://hot.baoxinwen.top'
+      label: '下载最新版',
+      url: 'https://github.com/baoxinwen/idle-fish/releases/latest'
     },
-    visual: 'trend',
+    visual: 'quote',
     size: 'compact'
   },
   {
-    name: 'PromptMate',
+    name: 'prompt-tool',
     category: '桌面效率工具',
-    description: '本地优先的跨平台提示词助手，把常用的提示词装进每个人自己的桌面。',
+    description: '本地优先的桌面提示词助手：全局热键呼出、剪贴板历史与云同步。',
     stack: ['Rust', 'Tauri 2', 'Vue 3'],
-    repoUrl: 'https://github.com/baoxinwen/PromptMate',
+    repoUrl: 'https://github.com/baoxinwen/prompt-tool',
     secondaryLink: {
       label: '下载最新版',
-      url: 'https://github.com/baoxinwen/PromptMate/releases/latest'
+      url: 'https://github.com/baoxinwen/prompt-tool/releases/latest'
     },
     visual: 'prompt',
     size: 'wide'
   },
   {
-    name: 'douyin-download',
-    category: '自托管工作台',
-    description: '抖音长期运行工作台：采集关注与粉丝、订阅与连续下载，双容器部署。',
-    stack: ['Python', 'DouK', 'Docker'],
-    repoUrl: 'https://github.com/baoxinwen/douyin-download',
+    name: 'home-stock',
+    category: '家庭自托管应用',
+    description: '家庭库存助手：开封与临期提醒、购物清单转库存、浪费统计与备份恢复。',
+    stack: ['Vue 3', 'NestJS', 'SQLite', 'Docker'],
+    repoUrl: 'https://github.com/baoxinwen/home-stock',
     secondaryLink: {
       label: '下载最新版',
-      url: 'https://github.com/baoxinwen/douyin-download/releases/latest'
+      url: 'https://github.com/baoxinwen/home-stock/releases/latest'
     },
-    visual: 'download',
+    visual: 'stock',
     size: 'wide'
   }
 ];

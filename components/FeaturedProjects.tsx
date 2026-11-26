@@ -33,10 +33,10 @@ const MemeVisual: React.FC = () => (
 const LedgerVisual: React.FC = () => (
   <div className="project-visual project-visual--ledger" data-print-hidden="true">
     <div className="visual-window ledger-window">
-      <WindowBar label="JUL / OVERVIEW" />
+      <WindowBar label="RENO / BUDGET" />
       <div className="ledger-layout">
-        <small>本月结余</small>
-        <strong>¥ 8,420</strong>
+        <small>预算执行</small>
+        <strong>¥ 128,600</strong>
         <div className="ledger-bars" aria-hidden="true">
           {Array.from({ length: 7 }, (_, index) => <i key={index} />)}
         </div>
@@ -48,7 +48,7 @@ const LedgerVisual: React.FC = () => (
 const TreeVisual: React.FC = () => (
   <div className="project-visual project-visual--tree" data-print-hidden="true">
     <div className="tree-terminal">
-      <WindowBar label="CopyTree.exe" />
+      <WindowBar label="copy-tree.exe" />
       <div className="tree-lines">
         <p><b>●</b> my-project/</p>
         <p><span>└──</span> src/</p>
@@ -70,18 +70,16 @@ const MapVisual: React.FC = () => (
   </div>
 );
 
-const TrendVisual: React.FC = () => (
-  <div className="project-visual project-visual--trend" data-print-hidden="true">
-    <div className="trend-summary">
-      <span>LIVE PULSE</span>
-      <strong>48 sources</strong>
-    </div>
-    <div className="trend-chart">
-      <span>TREND <b>+28%</b></span>
-      <svg viewBox="0 0 160 80" preserveAspectRatio="none" fill="none" aria-hidden="true">
-        <path className="trend-area" d="M0 67L20 61L40 66L60 38L80 48L100 22L120 34L140 11L160 18V80H0Z" />
-        <path className="trend-line" d="M0 67L20 61L40 66L60 38L80 48L100 22L120 34L140 11L160 18" />
-      </svg>
+const QuoteVisual: React.FC = () => (
+  <div className="project-visual project-visual--quote" data-print-hidden="true">
+    <div className="visual-window quote-window">
+      <WindowBar label="IDLE-FISH / QUOTE" />
+      <div className="quote-preview">
+        <p className="quote-line"><span>4040 铝型材 ×12</span><b>¥ 1,680</b></p>
+        <p className="quote-line"><span>角件与紧固件</span><b>¥ 260</b></p>
+        <p className="quote-line"><span>板材切割加工</span><b>¥ 540</b></p>
+        <p className="quote-total"><span>含税合计</span><b>¥ 2,480</b></p>
+      </div>
     </div>
   </div>
 );
@@ -89,24 +87,26 @@ const TrendVisual: React.FC = () => (
 const PromptVisual: React.FC = () => (
   <div className="project-visual project-visual--prompt" data-print-hidden="true">
     <div className="visual-window prompt-window">
-      <WindowBar label="PROMPTMATE" />
+      <WindowBar label="PROMPT-TOOL" />
       <div className="prompt-preview">
         <p className="prompt-title">周报生成器</p>
         <div className="prompt-lines" aria-hidden="true"><i /><i /></div>
-        <div className="prompt-tags" aria-hidden="true"><span>写作</span><span>工作</span><span>本地存储</span></div>
+        <div className="prompt-tags" aria-hidden="true"><span>热键</span><span>剪贴板</span><span>云同步</span></div>
       </div>
     </div>
   </div>
 );
 
-const DownloadVisual: React.FC = () => (
-  <div className="project-visual project-visual--download" data-print-hidden="true">
-    <div className="visual-window download-window">
-      <WindowBar label="DOUYIN / TASKS" />
-      <div className="download-preview">
-        <p className="download-title">订阅更新 · 3 个新视频 <em>✓ 运行中</em></p>
-        <div className="download-progress" aria-hidden="true"><i /></div>
-        <p className="download-meta">采集关注 · 连续下载 · DOCKER</p>
+const StockVisual: React.FC = () => (
+  <div className="project-visual project-visual--stock" data-print-hidden="true">
+    <div className="visual-window stock-window">
+      <WindowBar label="HOME-STOCK / PANTRY" />
+      <div className="stock-preview">
+        <p className="stock-line"><span>鲜牛奶 ×2</span><em>3 天后到期</em></p>
+        <p className="stock-line"><span>洗衣液</span><em>已开封 45 天</em></p>
+        <p className="stock-line stock-line--ok"><span>咖啡豆</span><em>库存充足</em></p>
+        <div className="stock-progress" aria-hidden="true"><i /></div>
+        <p className="stock-meta">临期提醒 · 购物清单 · 浪费统计</p>
       </div>
     </div>
   </div>
@@ -117,9 +117,9 @@ const visualComponents: Record<ProjectVisualType, React.FC> = {
   ledger: LedgerVisual,
   tree: TreeVisual,
   map: MapVisual,
-  trend: TrendVisual,
+  quote: QuoteVisual,
   prompt: PromptVisual,
-  download: DownloadVisual,
+  stock: StockVisual,
 };
 
 const ProjectVisual: React.FC<{ visual: ProjectVisualType }> = ({ visual }) => {
@@ -142,24 +142,15 @@ const FeaturedProjects: React.FC = () => (
     />
 
     <div className="project-grid">
-      {FEATURED_PROJECTS.map((project, index) => (
+      {FEATURED_PROJECTS.map((project) => (
         <article key={project.name} className={`project-card ${sizeStyles[project.size]}`}>
           <ProjectVisual visual={project.visual} />
 
           <div className="project-content">
-            <div className="project-meta">
-              <span><i />{project.category}</span>
-              <span>
-                {String(index + 1).padStart(2, '0')} / {String(FEATURED_PROJECTS.length).padStart(2, '0')}
-              </span>
-            </div>
-
             <h3>{project.name}</h3>
             <p className="project-description">{project.description}</p>
 
-            <div className="project-stack" aria-label={`${project.name} 技术栈`}>
-              {project.stack.map((technology) => <span key={technology}>{technology}</span>)}
-            </div>
+            <p className="project-stack">{project.stack.join(' · ')}</p>
 
             <div className="project-actions">
               <a

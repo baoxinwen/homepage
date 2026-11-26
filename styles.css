@@ -121,12 +121,14 @@ html.theme-ready .site-header {
 
 html.theme-ready .project-card,
 html.theme-ready .article-row,
-html.theme-ready .visual-window,
-html.theme-ready .tree-terminal,
-html.theme-ready .trend-summary,
-html.theme-ready .trend-chart,
 html.theme-ready .route-card {
-  transition: background-color 200ms ease, box-shadow 200ms ease;
+  transition: background-color 200ms ease, box-shadow 200ms ease, transform 260ms var(--ease-out);
+}
+
+/* 样张窗口比卡片轻，用更短的时长先落定，形成两层先后就位的物理感 */
+html.theme-ready .visual-window,
+html.theme-ready .tree-terminal {
+  transition: background-color 200ms ease, box-shadow 200ms ease, transform var(--dur-ui) var(--ease-out);
 }
 
 button,
@@ -165,6 +167,12 @@ a {
   .project-card:hover {
     transform: translateY(-4px);
     box-shadow: 8px 10px 0 var(--shadow-tint);
+  }
+
+  /* 卡片抬起时样张窗口多浮 3px：画匣里的裱件比匣身更轻 */
+  .project-card:hover .visual-window,
+  .project-card:hover .tree-terminal {
+    transform: translate(-50%, calc(-50% - 3px));
   }
 }
 
@@ -1055,6 +1063,7 @@ a {
   background: var(--surface);
   box-shadow: 4px 4px 0 color-mix(in srgb, var(--shadow) 16%, transparent);
   transform: translate(-50%, -50%);
+  transition: transform var(--dur-ui) var(--ease-out);
 }
 
 .visual-window-bar {
@@ -1263,57 +1272,48 @@ a {
 
 .route-card strong { display: block; margin-top: 0.15rem; font-size: 0.72rem; }
 
-.project-visual--trend {
-  padding: 0.8rem;
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 0.7rem;
+/* 报价单样张：明细行加等宽金额，合计行用朱砂收束 */
+.quote-preview {
+  padding: 0.65rem 0.8rem 0.75rem;
 }
 
-.trend-summary,
-.trend-chart {
-  min-width: 0;
-  padding: 0.7rem;
-  border-radius: var(--radius-m);
-  background: var(--surface);
-  box-shadow: 3px 3px 0 color-mix(in srgb, var(--shadow) 16%, transparent);
-}
-
-.trend-summary > span,
-.trend-chart > span {
-  color: var(--accent-text);
-  font-family: var(--font-mono-stack);
-  font-size: 0.48rem;
-  letter-spacing: 0.1em;
-}
-
-.trend-summary > strong {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 0.95rem;
-}
-
-.trend-chart {
-  position: relative;
-  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
-}
-
-.trend-chart > span {
+.quote-line {
+  margin: 0;
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  line-height: 2.1;
 }
 
-.trend-chart svg {
-  position: absolute;
-  inset: auto 0.6rem 0.6rem;
-  width: calc(100% - 1.2rem);
-  height: 72%;
+.quote-line b {
+  color: var(--ink);
+  font-family: var(--font-mono-stack);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-.trend-area { fill: color-mix(in srgb, var(--accent) 12%, transparent); }
-.trend-line { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.quote-total {
+  margin: 0.4rem 0 0;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  color: var(--accent-text);
+  font-size: 0.62rem;
+}
 
-/* 新增两个项目的窗口式样张：提示词库与下载任务 */
+.quote-total b {
+  font-family: var(--font-mono-stack);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 窗口式样张：提示词面板 */
 .prompt-preview {
   padding: 0.7rem 0.8rem 0.8rem;
 }
@@ -1353,39 +1353,51 @@ a {
   font-size: 0.52rem;
 }
 
-.download-preview {
+/* 库存样张：物品行加临期/充足状态徽标，进度条表达囤货健康度 */
+.stock-preview {
   padding: 0.7rem 0.8rem 0.8rem;
 }
 
-.download-title {
+.stock-line {
   margin: 0;
-  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   font-size: 0.7rem;
+  line-height: 2;
 }
 
-.download-title em {
-  margin-left: 0.4rem;
-  color: var(--success);
+.stock-line span {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.stock-line em {
+  color: var(--accent-text);
+  font-family: var(--font-mono-stack);
   font-size: 0.6rem;
   font-style: normal;
 }
 
-.download-progress {
+.stock-line--ok em { color: var(--success); }
+
+.stock-progress {
   height: 6px;
-  margin-top: 0.55rem;
+  margin-top: 0.5rem;
   border-radius: var(--radius-pill);
   background: var(--surface-alt);
   overflow: hidden;
 }
 
-.download-progress i {
+.stock-progress i {
   display: block;
-  width: 78%;
+  width: 64%;
   height: 100%;
-  background: var(--accent);
+  background: var(--success);
 }
 
-.download-meta {
+.stock-meta {
   margin: 0.5rem 0 0;
   color: var(--muted);
   font-family: var(--font-mono-stack);
@@ -1400,31 +1412,8 @@ a {
   flex-direction: column;
 }
 
-.project-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--muted);
-  font-family: var(--font-mono-stack);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  font-variant-numeric: tabular-nums;
-}
-
-.project-meta > span:first-child {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  overflow: hidden;
-  color: var(--accent);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .project-content h3 {
-  margin: 0.8rem 0 0;
+  margin: 0;
   font-family: var(--font-display-stack);
   font-size: clamp(1.5rem, 2.6vw, 1.9rem);
   font-weight: 900;
@@ -1444,18 +1433,11 @@ a {
   -webkit-line-clamp: 3;
 }
 
+/* 技术栈一行等宽文本，与能力清单的 · 分隔语言同源；信息保留，盒子去掉 */
 .project-stack {
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.project-stack span {
-  padding: 0.26rem 0.6rem;
-  border-radius: var(--radius-pill);
-  background: var(--surface-alt);
+  margin: 1rem 0 0;
   color: var(--muted);
+  font-family: var(--font-mono-stack);
   font-size: 0.68rem;
   letter-spacing: 0.04em;
 }
@@ -1469,8 +1451,7 @@ a {
   gap: 0.6rem;
 }
 
-.project-source-link,
-.project-secondary-link {
+.project-source-link {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
@@ -1481,12 +1462,24 @@ a {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-decoration: none;
+  background: var(--ink);
+  color: var(--canvas);
   transition: transform var(--dur-ui) var(--ease-out), background-color var(--dur-ui) ease, color var(--dur-ui) ease;
 }
 
-.project-source-link {
-  background: var(--ink);
-  color: var(--canvas);
+/* 次级动作退为文字链：一卡一主按钮，在线体验/下载不再与源码按钮争夺注意力 */
+.project-secondary-link {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: color var(--dur-ui) ease, transform var(--dur-ui) var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1496,15 +1489,8 @@ a {
   }
 
   .project-secondary-link:hover {
-    background: color-mix(in srgb, var(--ink) 7%, var(--surface-alt));
+    color: var(--accent);
   }
-}
-
-.project-secondary-link {
-  background: var(--surface-alt);
-  color: var(--ink);
-  /* 次级操作靠右：所有卡片形成同一条对齐轴，长短标签不再打散节奏 */
-  margin-left: auto;
 }
 
 /* Articles：目录页 */
@@ -1931,13 +1917,25 @@ a {
     font-size: 0.5rem;
   }
 
-  .project-visual--trend {
-    padding: 0.5rem;
+  .quote-preview {
+    padding: 0.5rem 0.6rem 0.55rem;
   }
 
-  .trend-summary,
-  .trend-chart {
-    padding: 0.5rem;
+  .quote-line {
+    font-size: 0.58rem;
+    line-height: 2;
+  }
+
+  .quote-total b {
+    font-size: 0.78rem;
+  }
+
+  .stock-preview {
+    padding: 0.55rem 0.6rem 0.6rem;
+  }
+
+  .stock-line {
+    font-size: 0.65rem;
   }
 
   .project-content {
@@ -1945,7 +1943,6 @@ a {
   }
 
   .project-content h3 {
-    margin-top: 0.6rem;
     font-size: 1.45rem;
   }
 
@@ -2056,6 +2053,8 @@ a {
   .capability-row,
   .smoke-step,
   .mobile-nav,
+  .visual-window,
+  .tree-terminal,
   html.theme-ready body,
   html.theme-ready .site-shell,
   html.theme-ready .site-header {
@@ -2069,6 +2068,12 @@ a {
   a:hover > .inline-icon,
   .article-row:hover .article-arrow {
     transform: none;
+  }
+
+  /* 悬停浮起归位到画匣居中（不能是 none：窗口靠 translate 居中） */
+  .project-card:hover .visual-window,
+  .project-card:hover .tree-terminal {
+    transform: translate(-50%, -50%);
   }
 
   .article-skeleton > span,
